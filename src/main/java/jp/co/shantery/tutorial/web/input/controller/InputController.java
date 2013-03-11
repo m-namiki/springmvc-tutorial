@@ -5,6 +5,7 @@ package jp.co.shantery.tutorial.web.input.controller;
 
 import jp.co.shantery.tutorial.web.input.command.InputCommand;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,11 +28,18 @@ public class InputController {
 	/** コマンド名です。 */
 	public static final String INPUT_COMMAND_NAME = "inputCommand";
 
+	/** 入力画面のパスです。 */
+	private static final String PAGE_INPUT = "input/input";
+
+	/** 結果画面のパスです。 */
+	private static final String PAGE_RESULT = "input/result";
+
 	/** ロガーです。 */
 	private static Logger logger = Logger.getLogger(InputController.class);
 
 	/**
-	 * コマンドクラスを作成します。
+	 * コマンドの初期オブジェクトを作成します。<br>
+	 * このメソッドを定義しなくてもコントローラとして動作しますが、バインドエラー時などに呼び出されるため存在しないとシステムエラーとなることがあります。
 	 * 
 	 * @return コマンド
 	 */
@@ -54,7 +62,7 @@ public class InputController {
 		model.addAttribute(INPUT_COMMAND_NAME, command);
 		logger.info("init() End.");
 
-		return "input/input";
+		return PAGE_INPUT;
 	}
 
 	/**
@@ -67,15 +75,31 @@ public class InputController {
 	 * @return hello_result.jspのパス
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView doNext(
+	public ModelAndView next(
 			@ModelAttribute(INPUT_COMMAND_NAME) InputCommand command,
 			BindingResult result) {
-		logger.info("doNext() Strat.");
+		logger.info("next() Strat.");
 
-		ModelAndView view = new ModelAndView("input/result");
-		view.addObject("name", command.getName());
-		logger.info("doNext() End.");
+		// 入力チェック
+		if (StringUtils.isEmpty(command.getMailAddress())) {
+			result.rejectValue("mailAddress", "errors.required");
+		}
+		if (StringUtils.isEmpty(command.getPassword())) {
+			result.rejectValue("password", "errors.required");
+		}
+
+		ModelAndView view = new ModelAndView();
+
+		// チェックエラーの場合は自画面遷移
+		if (result.hasErrors()) {
+			view.getModel().putAll(result.getModel());
+			view.setViewName(PAGE_INPUT);
+			return view;
+		}
+
+		view.setViewName(PAGE_RESULT);
+		view.addObject("name", command.getMailAddress());
+		logger.info("next() End.");
 		return view;
 	}
-
 }

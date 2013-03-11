@@ -25,8 +25,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:message/message</value>
-				<value>classpath:message/label</value>
+				<value>classpath:messages</value>
 			</list>
 		</property>
 	</bean>

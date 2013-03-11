@@ -8,7 +8,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * hello_input.jspで入力された情報を受け取るコマンドクラスです。
+ * input.jspで入力された情報を受け取るコマンドクラスです。
  * 
  * @author m-namiki
  * 
@@ -17,15 +17,26 @@ public class InputCommand implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** 名前です。 */
-	private String name;
+	/** メールアドレスです。 */
+	private String mailAddress;
 
-	public String getName() {
-		return name;
+	/** パスワードです。 */
+	private String password;
+
+	public String getMailAddress() {
+		return mailAddress;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMailAddress(String mailAddress) {
+		this.mailAddress = mailAddress;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

@@ -3,10 +3,11 @@
  */
 package jp.co.shantery.tutorial.web.input.controller;
 
+import javax.validation.Valid;
+
 import jp.co.shantery.tutorial.service.InputService;
 import jp.co.shantery.tutorial.web.input.command.InputCommand;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,22 +83,15 @@ public class InputController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView next(
-			@ModelAttribute(INPUT_COMMAND_NAME) InputCommand command,
+			@ModelAttribute(INPUT_COMMAND_NAME) @Valid InputCommand command,
 			BindingResult result) {
 		logger.info("next() Strat.");
-
-		// 入力チェック
-		if (StringUtils.isEmpty(command.getMailAddress())) {
-			result.rejectValue("mailAddress", "errors.required");
-		}
-		if (StringUtils.isEmpty(command.getPassword())) {
-			result.rejectValue("password", "errors.required");
-		}
 
 		ModelAndView view = new ModelAndView();
 
 		// チェックエラーの場合は自画面遷移
 		if (result.hasErrors()) {
+			result.reject("errors.invalid");
 			view.getModel().putAll(result.getModel());
 			view.setViewName(PAGE_INPUT);
 			return view;

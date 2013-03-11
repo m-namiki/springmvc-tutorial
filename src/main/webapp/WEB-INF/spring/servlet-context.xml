@@ -22,5 +22,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="beanValidator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	</bean>
+
 	<context:component-scan base-package="jp.co.shantery.tutorial.web.*.controller" />
 </beans>

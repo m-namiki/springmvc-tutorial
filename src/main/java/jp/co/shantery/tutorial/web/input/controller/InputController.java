@@ -3,10 +3,12 @@
  */
 package jp.co.shantery.tutorial.web.input.controller;
 
+import jp.co.shantery.tutorial.service.InputService;
 import jp.co.shantery.tutorial.web.input.command.InputCommand;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +38,10 @@ public class InputController {
 
 	/** ロガーです。 */
 	private static Logger logger = Logger.getLogger(InputController.class);
+
+	/** サービスです。 */
+	@Autowired
+	private InputService service;
 
 	/**
 	 * コマンドの初期オブジェクトを作成します。<br>
@@ -98,7 +104,7 @@ public class InputController {
 		}
 
 		view.setViewName(PAGE_RESULT);
-		view.addObject("name", command.getMailAddress());
+		view.addObject("name", service.execute(command.getMailAddress()));
 		logger.info("next() End.");
 		return view;
 	}

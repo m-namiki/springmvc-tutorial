@@ -7,4 +7,12 @@
 		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
 	</definition>
+	
+	<definition name="input/input" extends="default">
+		<put-attribute name="body" value="/WEB-INF/view/input/input.jsp"/>
+	</definition>
+	<definition name="input/result" extends="default">
+		<put-attribute name="body" value="/WEB-INF/view/input/result.jsp"/>
+	</definition>
+
 </tiles-definitions>

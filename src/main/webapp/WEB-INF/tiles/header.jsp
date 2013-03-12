@@ -9,10 +9,10 @@
 					<span class="icon-bar"></span> 
 					<span class="icon-bar"></span>
 			</a> 
-			<a class="brand" href="#">Demo project</a>
+			<a class="brand" href="#">SpringMVC-Tutorial</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li class="active"><a href='<s:url value="/"></s:url>'>Home</a></li>					
+					<li class="active"><a href='<s:url value="/input.html"></s:url>'>Input</a></li>					
 					<security:authorize access="!isAuthenticated()">
 						<li><a href='<s:url value="/signin"></s:url>'>Sign in</a></li>
 					</security:authorize>

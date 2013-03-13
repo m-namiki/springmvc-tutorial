@@ -6,21 +6,27 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#jsonReq').click(function() {
+			var form = $("#jsonCommand");
+			var param = {};
+			$(form.serializeArray()).each(function(i, v) {
+				param[v.name] = v.value;
+			});
+			var data = $.toJSON(param);
 			$.ajax({
 				type: "POST",
 				url: "json.html",
 				contentType: "application/json",
-				data: '{"name":"John Deo", "age":"30"}',
+				data: data,
 				dataType: 'json',
 				success: function(data) {
-					$("#name").empty();
-					$("#age").empty();
+					$("#responseName").empty();
+					$("#responseAge").empty();
 					$("#departmentName").empty();
 
-					$("<span/>").append('name = ' + data.name)
-							.appendTo("#name");
-					$("<span/>").append('age  = ' + data.age).appendTo("#age");
-					$("<span/>").append('deptName = ' + data.departmentName)
+					$("<span/>").append('名前 = ' + data.name)
+							.appendTo("#responseName");
+					$("<span/>").append('年齢  = ' + data.age).appendTo("#responseAge");
+					$("<span/>").append('所属部署 = ' + data.departmentName)
 							.appendTo("#departmentName");
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -41,6 +47,6 @@
 	<br>
 	<input type="button" id="jsonReq" class="btn btn-primary" value="送信"/>
 </form:form>
-<div id="name"></div>
-<div id="age"></div>
+<div id="responseName"></div>
+<div id="responseAge"></div>
 <div id="departmentName"></div>

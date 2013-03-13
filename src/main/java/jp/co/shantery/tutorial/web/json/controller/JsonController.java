@@ -7,6 +7,7 @@ import jp.co.shantery.tutorial.dto.JsonResponseDto;
 import jp.co.shantery.tutorial.web.json.command.JsonCommand;
 
 import org.apache.log4j.Logger;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,7 +67,7 @@ public class JsonController {
 	 * @param command
 	 *            コマンド
 	 */
-	@RequestMapping(produces = "application/json", method = RequestMethod.POST)
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponseDto execute(@RequestBody JsonCommand command) {
 		logger.info("execute() Start.");

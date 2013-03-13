@@ -18,6 +18,8 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/resources/js/jquery.form.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery.json-2.4.min.js" />"></script>
+
 </head>
 <body>
 	

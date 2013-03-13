@@ -13,9 +13,7 @@
 			<div class="nav-collapse collapse">
 				<ul class="nav">
 					<li class="active"><a href='<s:url value="/input.html"></s:url>'>Input</a></li>					
-					<security:authorize access="!isAuthenticated()">
-						<li><a href='<s:url value="/signin"></s:url>'>Sign in</a></li>
-					</security:authorize>
+					<li class="active"><a href='<s:url value="/json.html"></s:url>'>Json</a></li>
 					<security:authorize access="isAuthenticated()">
 						<li><a href='<s:url value="/logout"></s:url>'>Logout</a></li>
 					</security:authorize>

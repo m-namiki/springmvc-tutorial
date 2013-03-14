@@ -6,6 +6,7 @@ package jp.co.shantery.tutorial.web.input.controller;
 import javax.validation.Valid;
 
 import jp.co.shantery.tutorial.service.InputService;
+import jp.co.shantery.tutorial.util.Page;
 import jp.co.shantery.tutorial.web.input.command.InputCommand;
 
 import org.apache.log4j.Logger;
@@ -30,12 +31,6 @@ public class InputController {
 
 	/** コマンド名です。 */
 	public static final String INPUT_COMMAND_NAME = "inputCommand";
-
-	/** 入力画面のパスです。 */
-	private static final String PAGE_INPUT = "input/input";
-
-	/** 結果画面のパスです。 */
-	private static final String PAGE_RESULT = "input/result";
 
 	/** ロガーです。 */
 	private static Logger logger = Logger.getLogger(InputController.class);
@@ -69,7 +64,7 @@ public class InputController {
 		model.addAttribute(INPUT_COMMAND_NAME, command);
 		logger.info("init() End.");
 
-		return PAGE_INPUT;
+		return Page.PAGE_INPUT_INPUT;
 	}
 
 	/**
@@ -93,11 +88,11 @@ public class InputController {
 		if (result.hasErrors()) {
 			result.reject("errors.invalid");
 			view.getModel().putAll(result.getModel());
-			view.setViewName(PAGE_INPUT);
+			view.setViewName(Page.PAGE_INPUT_INPUT);
 			return view;
 		}
 
-		view.setViewName(PAGE_RESULT);
+		view.setViewName(Page.PAGE_INPUT_RESULT);
 		view.addObject("name", service.execute(command.getMailAddress()));
 		logger.info("next() End.");
 		return view;

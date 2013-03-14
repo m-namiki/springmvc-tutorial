@@ -21,6 +21,15 @@
 		</property>
 	</bean>
 
+	<bean id="configuration"
+		class="org.apache.commons.configuration.PropertiesConfiguration">
+		<constructor-arg type="java.net.URL" value="classpath:system.properties" />
+		<property name="reloadingStrategy">
+			<bean
+				class="org.apache.commons.configuration.reloading.FileChangedReloadingStrategy" />
+		</property>
+	</bean>
+
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">

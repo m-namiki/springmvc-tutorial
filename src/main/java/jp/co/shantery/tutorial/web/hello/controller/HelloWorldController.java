@@ -5,6 +5,8 @@ package jp.co.shantery.tutorial.web.hello.controller;
 
 import java.util.Date;
 
+import jp.co.shantery.tutorial.util.Page;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class HelloWorldController {
 		logger.info("index() Start.");
 
 		ModelAndView view = new ModelAndView();
-		view.setViewName("hello/hello");
+		view.setViewName(Page.PAGE_HELLO_HELLO);
 		view.addObject("message", "Hello Spring MVC world.");
 		view.addObject("currentDate", new Date());
 

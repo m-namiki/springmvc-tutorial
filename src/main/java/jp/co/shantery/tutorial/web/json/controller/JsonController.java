@@ -4,9 +4,15 @@
 package jp.co.shantery.tutorial.web.json.controller;
 
 import jp.co.shantery.tutorial.dto.JsonResponseDto;
+import jp.co.shantery.tutorial.service.UserService;
+import jp.co.shantery.tutorial.util.Page;
 import jp.co.shantery.tutorial.web.json.command.JsonCommand;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,14 +31,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/json")
 public class JsonController {
+
+	// ロガーです。
+	private static final Logger logger = LoggerFactory
+			.getLogger(JsonController.class);
+
 	/** コマンド名です。 */
 	public static final String COMMAND_NAME = "jsonCommand";
 
-	/** 入力画面のパスです。 */
-	private static final String PAGE_INPUT = "json/input";
+	/** ユーザー情報サービスです。 */
+	@Autowired
+	private UserService userService;
 
-	/** ロガーです。 */
-	private static Logger logger = Logger.getLogger(JsonController.class);
+	@Autowired
+	private Configuration configuration;
 
 	/**
 	 * コマンドの初期オブジェクトを作成します。<br>
@@ -58,7 +70,7 @@ public class JsonController {
 		logger.info("init() Start.");
 		model.addAttribute(COMMAND_NAME, createCommand());
 		logger.info("init() End.");
-		return PAGE_INPUT;
+		return Page.PAGE_JSON_INPUT;
 	}
 
 	/**
@@ -72,21 +84,22 @@ public class JsonController {
 	public JsonResponseDto execute(@RequestBody JsonCommand command) {
 		logger.info("execute() Start.");
 
+		logger.debug(configuration.getString("app.name"));
+
 		if (logger.isDebugEnabled()) {
-			logger.debug(command);
+			logger.debug(command.toString());
 		}
 
 		JsonResponseDto dto = new JsonResponseDto();
-		dto.setName(command.getName());
-		dto.setAge(command.getAge());
-		dto.setDepartmentName("開発部");
+		BeanUtils.copyProperties(command, dto,
+				new String[] { "departmentName" });
+		dto.setDepartmentName(userService.getDeptName(dto.getName()));
 
 		if (logger.isDebugEnabled()) {
-			logger.debug(dto);
+			logger.debug(dto.toString());
 		}
 
 		logger.info("execute() End.");
 		return dto;
 	}
-
 }
